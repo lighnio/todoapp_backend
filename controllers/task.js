@@ -1,8 +1,14 @@
 const Task = require('../models/task');
+const mongoose = require('mongoose');
+
 
 exports.getTasks = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 20;
+    const offset = (page - 1) * limit;
+
     try {
-        const tasks = await Task.find();  
+        const tasks = await Task.find().skip(offset).limit(limit);  
         res.status(200).json(tasks);
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener las tareas', error });
@@ -11,7 +17,10 @@ exports.getTasks = async (req, res) => {
 
 exports.createTask = async (req, res) => {
     try {
+        req.body["_id"] = new mongoose.Types.ObjectId();
+
         const newTask = new Task(req.body);
+        
         await newTask.save(); 
         res.status(201).json({ message: 'Tarea creada exitosamente', task: newTask });
     } catch (error) {
