@@ -4,6 +4,7 @@ const userController = require('../controllers/user');
 const taskController = require('../controllers/task');
 
 
+router.get('/login', userController.login);
 router.get('/users', userController.getUsers);
 router.post('/users', userController.createUser);
 router.get('/users/:id', userController.getUserById);
