@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 const taskSchema = new mongoose.Schema({
-    _id: Number,
+    _id: mongoose.Types.ObjectId,
     title: {
         type: String,
         required: true
@@ -31,7 +31,7 @@ const taskSchema = new mongoose.Schema({
     },
     updatedAt: Date,  
     userId: {
-        type: Number,
+        type: mongoose.Types.ObjectId,
         required: true
     }
 });
