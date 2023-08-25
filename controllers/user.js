@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const mongoose = require('mongoose');
+const bcrypt = require("bcrypt");
 
 exports.getUsers = async (req, res) => {
 
@@ -17,8 +18,15 @@ exports.getUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     try {
+
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
         req.body["_id"] = new mongoose.Types.ObjectId();
+        req.body["password"] = hashedPassword; 
+
         const newUser = new User(req.body);
+
         await newUser.save();  
         res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
     } catch (error) {
@@ -42,3 +50,23 @@ exports.getUserById = async (req, res) => {
     }
 };
 
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(401).json({ message: 'Credenciales inválidas' });
+        }
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Credenciales inválidas' });
+        }
+
+        res.status(202).json({ message: 'Inicio de sesión exitoso' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al iniciar sesión', error });
+    }
+};
