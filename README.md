@@ -61,7 +61,7 @@ Actualmente, no estamos aceptando contribuciones externas para este proyecto, ya
 
 ## Créditos
 
-- Joven y prometedor desarrolador Rafael de Jesús
+- Joven y prometedor desarrollador Rafael de Jesús
 
 ## Licencia
 
