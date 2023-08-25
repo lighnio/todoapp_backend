@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const mongoose = require('mongoose');
 
 exports.getUsers = async (req, res) => {
 
@@ -16,9 +17,9 @@ exports.getUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     try {
+        req.body["_id"] = new mongoose.Types.ObjectId();
         const newUser = new User(req.body);
         await newUser.save();  
-        console.log(newUser);
         res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
     } catch (error) {
         console.log(error);
