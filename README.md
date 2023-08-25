@@ -61,7 +61,7 @@ Actualmente, no estamos aceptando contribuciones externas para este proyecto, ya
 
 ## Créditos
 
-- #PalMar2023
+- Joven y prometedor desarrollador Rafael de Jesús
 
 ## Licencia
 
